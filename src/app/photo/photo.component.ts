@@ -1,15 +1,25 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { PhotoService } from '../photo.service';
 
 @Component({
   selector: 'app-photo',
   templateUrl: './photo.component.html',
   styleUrls: ['./photo.component.css']
 })
-export class PhotoComponent implements OnInit {
+export class PhotoComponent {
+  randomPhotoUrl: string;
 
-  constructor() { }
-
-  ngOnInit() {
+  constructor(private photo: PhotoService) {
+    this.fetchRandomPhoto();
   }
 
+  onButtonClick() {
+    this.fetchRandomPhoto();
+  }
+
+  fetchRandomPhoto() {
+    this.photo.getRandomPhoto().subscribe((response) => {
+      this.randomPhotoUrl = response.urls.regular;
+    });
+  }
 }
